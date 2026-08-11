@@ -1,0 +1,1473 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    >
+
+    <title>FlowChat</title>
+
+    <link
+        rel="stylesheet"
+        href="chats.css"
+    >
+
+</head>
+
+
+<body>
+
+<div id="app">
+
+
+    <!-- =====================================================
+         SIDEBAR
+    ====================================================== -->
+
+    <aside
+        class="sidebar"
+        id="sidebar"
+    >
+
+
+        <!-- =================================================
+             SIDEBAR HEADER
+        ================================================== -->
+
+        <div class="sidebar-header">
+
+            <div class="brand">
+
+                <div class="brand-logo">
+                    F
+                </div>
+
+                <div class="brand-info">
+
+                    <div class="brand-title">
+                        FlowChat
+                    </div>
+
+                    <div
+                        class="brand-subtitle"
+                        data-i18n="messenger"
+                    >
+                        Мессенджер
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <button
+                class="icon-button"
+                id="newChatBtn"
+                type="button"
+                title="Новый чат"
+                aria-label="Новый чат"
+                data-i18n-title="newChat"
+                data-i18n-aria="newChat"
+            >
+                +
+            </button>
+
+        </div>
+
+
+
+
+
+
+
+        <!-- =================================================
+             SEARCH
+        ================================================== -->
+
+        <div class="search-area">
+
+            <div class="search-box">
+
+                <span class="search-icon">
+                    🔎
+                </span>
+
+                <input
+                    id="searchInput"
+                    type="text"
+                    placeholder="Поиск людей..."
+                    data-i18n-placeholder="searchPeople"
+                    autocomplete="off"
+                >
+
+            </div>
+
+        </div>
+
+
+
+        <!-- =================================================
+             CHAT LIST
+        ================================================== -->
+
+        <div class="chat-list">
+
+
+            <div
+                class="chat-list-title"
+                data-i18n="chats"
+            >
+                Чаты
+            </div>
+
+
+
+            <!-- =================================================
+                 FAVORITES
+            ================================================== -->
+
+            <div
+                class="chat-item active"
+                id="favoritesChat"
+                data-chat="favorites"
+            >
+
+                <div class="chat-avatar favorites-avatar">
+                    ★
+                </div>
+
+
+                <div class="chat-item-info">
+
+                    <div class="chat-item-top">
+
+                        <span
+                            class="chat-name"
+                            data-i18n="favorites"
+                        >
+                            Избранное
+                        </span>
+
+                    </div>
+
+
+                    <div
+                        class="chat-preview"
+                        data-i18n="savedMessagesDescription"
+                    >
+                        Личные сохранённые сообщения
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- =================================================
+                 DYNAMIC CHATS
+            ================================================== -->
+
+            <div
+                id="chatList"
+            ></div>
+
+
+
+            <!-- =================================================
+                 FLOW SYSTEM
+            ================================================== -->
+
+            <div
+                class="chat-item system-chat"
+                id="systemChat"
+                data-chat="system"
+            >
+
+                <div
+                    class="chat-avatar system-chat-avatar"
+                >
+                    📢
+                </div>
+
+
+                <div class="chat-item-info">
+
+                    <div class="chat-item-top">
+
+                        <span
+                            class="chat-name"
+                            data-i18n="systemChat"
+                        >
+                            Flow System
+                        </span>
+
+                    </div>
+
+
+                    <div
+                        class="chat-preview"
+                        data-i18n="systemChatDescription"
+                    >
+                        Официальные новости FlowChat
+                    </div>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- =================================================
+             SIDEBAR BOTTOM
+        ================================================== -->
+
+        <div class="sidebar-bottom">
+
+            <button
+                class="settings-button"
+                id="settingsButton"
+                type="button"
+                title="Настройки"
+                aria-label="Настройки"
+                data-i18n-title="settings"
+                data-i18n-aria="settings"
+            >
+                ⚙️
+            </button>
+
+        </div>
+
+
+    </aside>
+
+
+
+    <!-- =====================================================
+         MOBILE BACKDROP
+    ====================================================== -->
+
+    <div
+        class="sidebar-backdrop"
+        id="sidebarBackdrop"
+    ></div>
+
+
+
+    <!-- =====================================================
+         MAIN CHAT
+    ====================================================== -->
+
+    <main class="chat-main">
+
+
+        <!-- =================================================
+             CHAT HEADER
+        ================================================== -->
+
+        <header class="chat-header">
+
+
+            <div class="chat-header-left">
+
+
+                <button
+                    class="mobile-menu-button"
+                    id="mobileMenuBtn"
+                    type="button"
+                    aria-label="Открыть меню"
+                    data-i18n-aria="openMenu"
+                >
+                    ☰
+                </button>
+
+
+                <div
+                    class="chat-header-avatar"
+                    id="chatHeaderAvatar"
+                >
+                    ★
+                </div>
+
+
+                <div class="chat-header-info">
+
+                    <div
+                        class="chat-header-title"
+                        id="chatTitle"
+                        data-i18n="favorites"
+                    >
+                        Избранное
+                    </div>
+
+
+                    <div
+                        class="chat-header-subtitle"
+                        id="chatSubtitle"
+                        data-i18n="savedMessagesDescription"
+                    >
+                        Личные сохранённые сообщения
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- =================================================
+                 HEADER ACTIONS
+            ================================================== -->
+
+            <div class="chat-header-actions">
+
+                <button
+                    class="icon-button"
+                    id="chatInfoBtn"
+                    type="button"
+                    title="Информация"
+                    aria-label="Информация"
+                    data-i18n-title="information"
+                    data-i18n-aria="information"
+                >
+                    ⓘ
+                </button>
+
+            </div>
+
+
+        </header>
+
+
+
+        <!-- =================================================
+             MESSAGES
+        ================================================== -->
+
+        <section
+            class="messages"
+            id="messages"
+        >
+
+            <div
+                class="empty-favorites"
+                id="emptyFavorites"
+            >
+
+                <div class="empty-favorites-icon">
+                    ★
+                </div>
+
+
+                <h2
+                    data-i18n="favorites"
+                >
+                    Избранное
+                </h2>
+
+
+                <p
+                    data-i18n="savedMessagesDescription"
+                >
+                    Личные сохранённые сообщения
+                </p>
+
+
+                <p
+                    class="empty-hint"
+                    data-i18n="startMessage"
+                >
+                    Напиши сообщение ниже, чтобы начать.
+                </p>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =================================================
+             SYSTEM READ ONLY NOTICE
+        ================================================== -->
+
+        <div
+            class="system-readonly-notice"
+            id="systemReadonlyNotice"
+            style="display:none;"
+        >
+
+            <span>
+                🔒
+            </span>
+
+
+            <span
+                id="systemReadonlyText"
+                data-i18n="onlyOfficialCanWrite"
+            >
+                Только официальный аккаунт может публиковать сообщения
+            </span>
+
+        </div>
+
+
+
+        <!-- =================================================
+             MESSAGE AREA
+        ================================================== -->
+
+        <div class="message-area">
+
+            <form
+                class="message-form"
+                id="messageForm"
+            >
+
+
+                <div class="message-input-wrapper">
+
+
+                    <!-- ATTACH -->
+
+                    <button
+                        id="attachButton"
+                        type="button"
+                        title="Прикрепить файл"
+                        aria-label="Прикрепить файл"
+                        data-i18n-title="attachFile"
+                        data-i18n-aria="attachFile"
+                    >
+                        +
+                    </button>
+
+
+                    <input
+                        type="file"
+                        id="fileInput"
+                        hidden
+                    >
+
+
+                    <!-- TEXTAREA -->
+
+                    <textarea
+                        id="messageInput"
+                        rows="1"
+                        placeholder="Написать сообщение..."
+                        data-i18n-placeholder="writeMessage"
+                        autocomplete="off"
+                    ></textarea>
+
+
+                </div>
+
+
+
+                <!-- SEND -->
+
+                <button
+                    id="sendButton"
+                    type="submit"
+                    title="Отправить"
+                    aria-label="Отправить"
+                    data-i18n-title="send"
+                    data-i18n-aria="send"
+                >
+                    ➤
+                </button>
+
+
+            </form>
+
+        </div>
+
+
+    </main>
+
+
+</div>
+
+
+
+<!-- =====================================================
+     PROFILE OVERLAY
+====================================================== -->
+
+<div
+    class="profile-overlay"
+    id="profileOverlay"
+>
+
+
+    <div
+        class="profile-panel"
+        id="profilePanel"
+    >
+
+
+        <!-- PROFILE HEADER -->
+
+        <div class="profile-header">
+
+            <button
+                class="profile-close"
+                id="profileClose"
+                type="button"
+                aria-label="Закрыть"
+                data-i18n-aria="close"
+            >
+                ×
+            </button>
+
+        </div>
+
+
+
+        <!-- PROFILE TOP -->
+
+        <div class="profile-top">
+
+
+            <div
+                class="profile-avatar"
+                id="profileAvatar"
+            >
+                ?
+            </div>
+
+
+            <!-- НЕ ПЕРЕВОДИТСЯ -->
+            <h2
+                id="profileTitle"
+            >
+                Пользователь
+            </h2>
+
+
+            <!-- НЕ ПЕРЕВОДИТСЯ -->
+            <div
+                class="profile-username"
+                id="profileUsername"
+            >
+                @username
+            </div>
+
+
+            <div
+                class="profile-description"
+                data-i18n="profileDescription"
+            >
+                Профиль FlowChat
+            </div>
+
+
+        </div>
+
+
+
+        <!-- PROFILE FORM -->
+
+        <div class="profile-form">
+
+
+            <!-- NAME -->
+
+            <label
+                class="profile-label"
+                for="profileNameInput"
+                data-i18n="name"
+            >
+                Имя
+            </label>
+
+
+            <input
+                class="profile-input"
+                id="profileNameInput"
+                type="text"
+                maxlength="32"
+                placeholder="Твоё имя"
+                data-i18n-placeholder="yourName"
+                autocomplete="off"
+            >
+
+
+
+            <!-- USERNAME -->
+
+            <label
+                class="profile-label"
+                for="profileUsernameInput"
+                data-i18n="username"
+            >
+                Username
+            </label>
+
+
+            <input
+                class="profile-input"
+                id="profileUsernameInput"
+                type="text"
+                maxlength="32"
+                placeholder="@username"
+                data-i18n-placeholder="usernamePlaceholder"
+                autocomplete="off"
+            >
+
+
+            <div
+                class="username-hint"
+                data-i18n="usernameHint"
+            >
+                Username используется для поиска тебя
+                в FlowChat.
+            </div>
+
+
+
+            <!-- SAVE -->
+
+            <button
+                id="saveProfileBtn"
+                type="button"
+                data-i18n="saveChanges"
+            >
+                Сохранить изменения
+            </button>
+
+
+
+            <!-- LOGOUT -->
+
+            <button
+                class="logout-button"
+                id="logoutButton"
+                type="button"
+                data-i18n="logout"
+            >
+                Выйти из аккаунта
+            </button>
+
+
+        </div>
+
+
+    </div>
+
+
+</div>
+
+
+
+<!-- =====================================================
+     INFO MODAL
+====================================================== -->
+
+<div
+    class="info-modal"
+    id="infoModal"
+>
+
+
+    <div class="info-modal-content">
+
+
+        <button
+            class="info-modal-close"
+            id="infoModalClose"
+            type="button"
+            aria-label="Закрыть"
+            data-i18n-aria="close"
+        >
+            ×
+        </button>
+
+
+        <div class="info-modal-icon">
+            ★
+        </div>
+
+
+        <h2
+            id="infoModalTitle"
+            data-i18n="favorites"
+        >
+            Избранное
+        </h2>
+
+
+        <p
+            id="infoModalText"
+            data-i18n="savedMessagesDescription"
+        >
+            Личные сохранённые сообщения
+        </p>
+
+
+    </div>
+
+
+</div>
+
+
+
+<!-- =====================================================
+     TOAST
+====================================================== -->
+
+<div
+    class="toast"
+    id="toast"
+></div>
+
+
+
+<!-- =====================================================
+     SETTINGS
+====================================================== -->
+
+<div
+    class="settings-overlay"
+    id="settingsOverlay"
+>
+
+    <div class="settings-panel">
+
+
+        <!-- SETTINGS HEADER -->
+
+        <div class="settings-header">
+
+            <div>
+
+                <h2
+                    id="settingsTitle"
+                    data-i18n="settings"
+                >
+                    Настройки
+                </h2>
+
+
+                <p
+                    id="settingsSubtitle"
+                    data-i18n="settingsDescription"
+                >
+                    Настройте FlowChat под себя
+                </p>
+
+            </div>
+
+
+            <button
+                class="settings-close"
+                id="settingsClose"
+                type="button"
+                aria-label="Закрыть"
+                data-i18n-aria="close"
+            >
+                ×
+            </button>
+
+        </div>
+
+
+
+        <!-- SETTINGS CONTENT -->
+
+        <div class="settings-content">
+
+
+            <!-- PROFILE -->
+
+            <button
+                class="settings-item"
+                id="settingsProfile"
+                type="button"
+            >
+
+                <span class="settings-item-icon">
+                    👤
+                </span>
+
+
+                <span>
+
+                    <b
+                        id="profileSettingsTitle"
+                        data-i18n="profile"
+                    >
+                        Профиль
+                    </b>
+
+
+                    <small
+                        id="profileSettingsDesc"
+                        data-i18n="profileSettingsDescription"
+                    >
+                        Имя и @username
+                    </small>
+
+                </span>
+
+            </button>
+
+
+
+            <!-- THEME -->
+
+            <button
+                class="settings-item"
+                id="settingsTheme"
+                type="button"
+            >
+
+                <span class="settings-item-icon">
+                    🌙
+                </span>
+
+
+                <span>
+
+                    <b
+                        id="themeTitle"
+                        data-i18n="theme"
+                    >
+                        Тема
+                    </b>
+
+
+                    <small
+                        id="themeDesc"
+                        data-i18n="dark"
+                    >
+                        Тёмная
+                    </small>
+
+                </span>
+
+            </button>
+
+
+
+            <!-- PRIVACY -->
+
+            <button
+                class="settings-item"
+                id="settingsPrivacy"
+                type="button"
+            >
+
+                <span class="settings-item-icon">
+                    🔒
+                </span>
+
+
+                <span>
+
+                    <b
+                        id="privacyTitle"
+                        data-i18n="privacy"
+                    >
+                        Приватный профиль
+                    </b>
+
+
+                    <small
+                        id="privacyDesc"
+                        data-i18n="disabled"
+                    >
+                        Выключен
+                    </small>
+
+                </span>
+
+            </button>
+                        <!-- LANGUAGE -->
+
+            <button
+                class="settings-item"
+                id="settingsLanguage"
+                type="button"
+                aria-label="Сменить язык"
+                data-i18n-aria="language"
+            >
+
+                <span
+                    class="settings-item-icon"
+                    id="languageFlag"
+                >
+                    🇷🇺
+                </span>
+
+                <span>
+
+                    <b
+                        id="languageTitle"
+                        data-i18n="language"
+                    >
+                        Язык
+                    </b>
+
+                    <small
+                        id="languageDesc"
+                    >
+                        Русский
+                    </small>
+
+                </span>
+
+            </button>
+
+
+
+
+            </button>
+
+
+        </div>
+
+
+    </div>
+
+</div>
+
+
+
+<!-- =====================================================
+     SIDEBAR PROFILE SYNCHRONIZATION
+====================================================== -->
+
+<script>
+
+(function () {
+
+    "use strict";
+
+
+    function updateSidebarProfile() {
+
+        const profileTitle =
+            document.getElementById(
+                "profileTitle"
+            );
+
+        const profileUsername =
+            document.getElementById(
+                "profileUsername"
+            );
+
+        const sidebarName =
+            document.getElementById(
+                "sidebarName"
+            );
+
+        const sidebarUsername =
+            document.getElementById(
+                "sidebarUsername"
+            );
+
+        const sidebarAvatar =
+            document.getElementById(
+                "sidebarAvatar"
+            );
+
+
+        if (!sidebarName) {
+            return;
+        }
+
+
+        let name =
+            profileTitle
+                ? profileTitle.textContent.trim()
+                : "";
+
+
+        let username =
+            profileUsername
+                ? profileUsername.textContent.trim()
+                : "";
+
+
+        if (!name) {
+            name = "Пользователь";
+        }
+
+
+        if (!username) {
+            username = "@username";
+        }
+
+
+        if (
+            username.charAt(0) !== "@"
+        ) {
+
+            username =
+                "@" + username;
+
+        }
+
+
+        sidebarName.textContent =
+            name;
+
+
+        sidebarUsername.textContent =
+            username;
+
+
+        if (sidebarAvatar) {
+
+            sidebarAvatar.textContent =
+                name
+                    .charAt(0)
+                    .toUpperCase() ||
+                "?";
+
+        }
+
+    }
+
+
+
+    /* =====================================================
+       USER READY
+    ===================================================== */
+
+    window.addEventListener(
+        "flowchatUserReady",
+        function () {
+
+            setTimeout(
+                updateSidebarProfile,
+                50
+            );
+
+            setTimeout(
+                updateSidebarProfile,
+                300
+            );
+
+            setTimeout(
+                updateSidebarProfile,
+                800
+            );
+
+        }
+    );
+
+
+
+    /* =====================================================
+       PROFILE CHANGED
+    ===================================================== */
+
+    window.addEventListener(
+        "flowchatProfileChanged",
+        function () {
+
+            setTimeout(
+                updateSidebarProfile,
+                50
+            );
+
+        }
+    );
+
+
+
+    /* =====================================================
+       DOM READY
+    ===================================================== */
+
+    document.addEventListener(
+        "DOMContentLoaded",
+        function () {
+
+            const profileTitle =
+                document.getElementById(
+                    "profileTitle"
+                );
+
+            const profileUsername =
+                document.getElementById(
+                    "profileUsername"
+                );
+
+
+            if (profileTitle) {
+
+                new MutationObserver(
+                    updateSidebarProfile
+                ).observe(
+                    profileTitle,
+                    {
+                        childList: true,
+                        characterData: true,
+                        subtree: true
+                    }
+                );
+
+            }
+
+
+            if (profileUsername) {
+
+                new MutationObserver(
+                    updateSidebarProfile
+                ).observe(
+                    profileUsername,
+                    {
+                        childList: true,
+                        characterData: true,
+                        subtree: true
+                    }
+                );
+
+            }
+
+
+            setTimeout(
+                updateSidebarProfile,
+                100
+            );
+
+            setTimeout(
+                updateSidebarProfile,
+                500
+            );
+
+            setTimeout(
+                updateSidebarProfile,
+                1000
+            );
+
+        }
+    );
+
+
+})();
+
+</script>
+
+
+
+<!-- =====================================================
+     LANGUAGE SYSTEM
+====================================================== -->
+
+<script
+    src="languages.js"
+></script>
+
+
+
+<!-- =====================================================
+     SETTINGS
+====================================================== -->
+
+<script
+    src="settings.js"
+></script>
+
+
+
+<!-- =====================================================
+     CHATS
+====================================================== -->
+<script src="debug-language.js"></script>
+<script src="crypto.js"></script>
+
+<script
+    type="module"
+    src="chats.js"
+></script>
+
+<script>
+/* =====================================================
+   FLOWCHAT — LANGUAGES.JS SYNTAX DEBUG
+===================================================== */
+
+(async function () {
+
+    console.log(
+        "🔎 FLOWCHAT LANGUAGES.JS SYNTAX DEBUG START"
+    );
+
+    try {
+
+        const scripts =
+            [...document.querySelectorAll("script")];
+
+        const languageScript =
+            scripts.find(
+                script =>
+                    script.src &&
+                    script.src.includes(
+                        "languages.js"
+                    )
+            );
+
+        if (!languageScript) {
+
+            console.error(
+                "❌ Тег languages.js не найден в HTML"
+            );
+
+            return;
+        }
+
+        const url =
+            languageScript.src;
+
+        console.log(
+            "📄 languages.js:",
+            url
+        );
+
+
+        const response =
+            await fetch(url);
+
+
+        if (!response.ok) {
+
+            console.error(
+                "❌ Не удалось прочитать languages.js",
+                response.status
+            );
+
+            return;
+        }
+
+
+        const code =
+            await response.text();
+
+
+        console.log(
+            "📦 Размер languages.js:",
+            code.length,
+            "символов"
+        );
+
+
+        /*
+         * Проверяем синтаксис.
+         */
+
+        try {
+
+            new Function(code);
+
+            console.log(
+                "✅ СИНТАКСИС languages.js ПРАВИЛЬНЫЙ"
+            );
+
+        } catch (error) {
+
+            console.error(
+                "🔥🔥🔥 НАЙДЕНА СИНТАКСИЧЕСКАЯ ОШИБКА 🔥🔥🔥"
+            );
+
+            console.error(
+                error
+            );
+
+
+            /*
+             * Пытаемся достать номер строки
+             * из сообщения браузера.
+             */
+
+            const message =
+                String(
+                    error.message ||
+                    error
+                );
+
+            console.log(
+                "💬 Сообщение:",
+                message
+            );
+
+
+            /*
+             * Ищем номер строки.
+             */
+
+            const match =
+                message.match(
+                    /line\s*(\d+)/i
+                );
+
+
+            if (match) {
+
+                const line =
+                    Number(
+                        match[1]
+                    );
+
+                console.error(
+                    "📌 Примерная строка:",
+                    line
+                );
+
+            }
+
+
+            /*
+             * Показываем последние строки файла.
+             * Это особенно полезно при
+             * Unexpected end of input.
+             */
+
+            const lines =
+                code.split("\n");
+
+
+            console.log(
+                "📜 Последние 50 строк languages.js:"
+            );
+
+
+            const start =
+                Math.max(
+                    0,
+                    lines.length - 50
+                );
+
+
+            for (
+                let i = start;
+                i < lines.length;
+                i++
+            ) {
+
+                console.log(
+                    `${i + 1}:`,
+                    lines[i]
+                );
+
+            }
+
+
+            /*
+             * Проверяем баланс скобок.
+             */
+
+            let braces = 0;
+            let brackets = 0;
+            let parentheses = 0;
+
+
+            for (
+                let i = 0;
+                i < code.length;
+                i++
+            ) {
+
+                const char =
+                    code[i];
+
+
+                if (char === "{") {
+                    braces++;
+                }
+
+                if (char === "}") {
+                    braces--;
+                }
+
+                if (char === "[") {
+                    brackets++;
+                }
+
+                if (char === "]") {
+                    brackets--;
+                }
+
+                if (char === "(") {
+                    parentheses++;
+                }
+
+                if (char === ")") {
+                    parentheses--;
+                }
+
+            }
+
+
+            console.log(
+                "📊 Баланс скобок:"
+            );
+
+            console.log(
+                "{ } :",
+                braces
+            );
+
+            console.log(
+                "[ ] :",
+                brackets
+            );
+
+            console.log(
+                "( ) :",
+                parentheses
+            );
+
+
+            if (braces !== 0) {
+
+                console.error(
+                    "❌ Проблема с фигурными скобками { }"
+                );
+
+            }
+
+            if (brackets !== 0) {
+
+                console.error(
+                    "❌ Проблема с квадратными скобками [ ]"
+                );
+
+            }
+
+            if (parentheses !== 0) {
+
+                console.error(
+                    "❌ Проблема с круглыми скобками ( )"
+                );
+
+            }
+
+        }
+
+
+    } catch (error) {
+
+        console.error(
+            "🔥 Ошибка DEBUG:",
+            error
+        );
+
+    }
+
+})();
+</script>
+
+</body>
+
+</html>

@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    >
+
+    <meta name="theme-color" content="#07091b">
+
+    <title>FlowChat</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<main class="page">
+
+    <section class="card">
+
+        <!-- LOGO -->
+
+        <div class="logo">
+
+            <div class="logo-icon">
+                F
+            </div>
+
+            <span>
+                Flow<b>Chat</b>
+            </span>
+
+        </div>
+
+        <!-- =========================
+             REGISTRATION
+        ========================== -->
+
+        <div id="registerView">
+
+            <header>
+
+                <h1>
+                    Создайте аккаунт
+                </h1>
+
+                <p>
+                    Общайтесь с друзьями и будьте всегда на связи.
+                </p>
+
+            </header>
+
+
+            <form id="registerForm">
+
+                <!-- USERNAME -->
+
+                <label>
+
+                    Имя пользователя
+
+                    <div class="input">
+
+                        <span>👤</span>
+
+                        <input
+                            id="username"
+                            type="text"
+                            placeholder="Например, TheBS_gorm"
+                            maxlength="24"
+                            autocomplete="username"
+                        >
+
+                    </div>
+
+                    <small>
+                        3–24 символа
+                    </small>
+
+                    <em id="usernameError"></em>
+
+                </label>
+
+
+                <!-- EMAIL -->
+
+                <label>
+
+                    Email
+
+                    <div class="input">
+
+                        <span>✉</span>
+
+                        <input
+                            id="email"
+                            type="email"
+                            placeholder="you@example.com"
+                            autocomplete="email"
+                        >
+
+                    </div>
+
+                    <em id="emailError"></em>
+
+                </label>
+
+
+                <!-- PASSWORD -->
+
+                <label>
+
+                    Пароль
+
+                    <div class="input">
+
+                        <span>🔒</span>
+
+                        <input
+                            id="password"
+                            type="password"
+                            placeholder="Придумайте пароль"
+                            autocomplete="new-password"
+                        >
+
+                        <button
+                            type="button"
+                            class="eye"
+                            data-password="password"
+                        >
+                            ◉
+                        </button>
+
+                    </div>
+
+
+                    <div class="strength">
+
+                        <div>
+
+                            <i></i>
+                            <i></i>
+                            <i></i>
+                            <i></i>
+
+                        </div>
+
+                        <span id="strengthText">
+                            Придумайте пароль
+                        </span>
+
+                    </div>
+
+                    <em id="passwordError"></em>
+
+                </label>
+
+
+                <!-- CONFIRM PASSWORD -->
+
+                <label>
+
+                    Повторите пароль
+
+                    <div class="input">
+
+                        <span>🔐</span>
+
+                        <input
+                            id="confirm"
+                            type="password"
+                            placeholder="Повторите пароль"
+                            autocomplete="new-password"
+                        >
+
+                        <button
+                            type="button"
+                            class="eye"
+                            data-password="confirm"
+                        >
+                            ◉
+                        </button>
+
+                    </div>
+
+                    <em id="confirmError"></em>
+
+                </label>
+
+
+                <!-- TERMS -->
+
+                <label class="terms">
+
+                    <input
+                        id="terms"
+                        type="checkbox"
+                    >
+
+                    <span class="check"></span>
+
+                    <p>
+
+                        Я принимаю
+
+                        <a
+                            href="#"
+                            id="termsLink"
+                        >
+                            условия использования
+                        </a>
+
+                        и
+
+                        <a
+                            href="#"
+                            id="privacyLink"
+                        >
+                            политику конфиденциальности
+                        </a>.
+
+                    </p>
+
+                </label>
+
+                <em id="termsError"></em>
+
+
+                <!-- REGISTER BUTTON -->
+
+                <button
+                    class="submit"
+                    id="registerButton"
+                    type="submit"
+                >
+
+                    <span>
+                        Создать аккаунт
+                    </span>
+
+                    <b>
+                        →
+                    </b>
+
+                </button>
+
+            </form>
+            
+            <!-- LOGIN INSTEAD -->
+
+<div
+    id="loginInsteadBox"
+    style="display: none;"
+>
+
+    <p id="loginInsteadText">
+        Уже есть аккаунт? Попробуйте войти в него.
+    </p>
+
+    <button
+        type="button"
+        class="secondary-button"
+        id="loginInsteadBtn"
+    >
+        Войти в этот аккаунт
+    </button>
+
+</div>
+
+
+            <!-- DIVIDER -->
+
+            <div class="or">
+                <span>или</span>
+            </div>
+
+
+            <!-- LOGIN SWITCH -->
+
+            <div class="login">
+
+                Уже есть аккаунт?
+
+                <button
+                    type="button"
+                    id="showLogin"
+                >
+                    Войти
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- =========================
+             LOGIN
+        ========================== -->
+
+        <div
+            id="loginView"
+            class="hidden"
+        >
+
+            <header>
+
+                <h1>
+                    С возвращением!
+                </h1>
+
+                <p>
+                    Войдите в свой аккаунт FlowChat.
+                </p>
+
+            </header>
+
+
+            <form id="loginForm">
+
+                <!-- EMAIL -->
+
+                <label>
+
+                    Email
+
+                    <div class="input">
+
+                        <span>✉</span>
+
+                        <input
+                            id="loginEmail"
+                            type="email"
+                            placeholder="you@example.com"
+                            autocomplete="email"
+                        >
+
+                    </div>
+
+                    <em id="loginEmailError"></em>
+
+                </label>
+
+
+                <!-- PASSWORD -->
+
+                <label>
+
+                    Пароль
+
+                    <div class="input">
+
+                        <span>🔒</span>
+
+                        <input
+                            id="loginPassword"
+                            type="password"
+                            placeholder="Введите пароль"
+                            autocomplete="current-password"
+                        >
+
+                        <button
+                            type="button"
+                            class="eye"
+                            data-password="loginPassword"
+                        >
+                            ◉
+                        </button>
+
+                    </div>
+
+                    <em id="loginPasswordError"></em>
+
+                </label>
+
+
+                <!-- FORGOT PASSWORD -->
+
+                <button
+                    type="button"
+                    class="forgot"
+                    id="forgotPassword"
+                >
+                    Забыли пароль?
+                </button>
+
+
+                <!-- LOGIN BUTTON -->
+
+                <button
+                    class="submit"
+                    id="loginButton"
+                    type="submit"
+                >
+
+                    <span>
+                        Войти
+                    </span>
+
+                    <b>
+                        →
+                    </b>
+
+                </button>
+
+            </form>
+
+
+            <!-- DIVIDER -->
+
+            <div class="or">
+                <span>или</span>
+            </div>
+
+
+            <!-- REGISTER SWITCH -->
+
+            <div class="login">
+
+                Нет аккаунта?
+
+                <button
+                    type="button"
+                    id="showRegister"
+                >
+                    Создать
+                </button>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         FOOTER
+    ========================== -->
+
+    <footer>
+
+        <span>●</span>
+
+        FlowChat · Общайтесь свободно
+
+        <br>
+
+        © 2026 FlowChat.
+        Все права защищены.
+
+    </footer>
+
+</main>
+
+
+<!-- =========================
+     DOCUMENT MODAL
+========================== -->
+
+<div
+    class="modal"
+    id="documentModal"
+>
+
+    <div class="modal-overlay"></div>
+
+
+    <div class="modal-box">
+
+        <button
+            class="modal-close"
+            id="modalClose"
+            type="button"
+        >
+            ×
+        </button>
+
+
+        <div
+            class="modal-icon"
+            id="modalIcon"
+        >
+            📄
+        </div>
+
+
+        <h2 id="modalTitle">
+            Условия использования
+        </h2>
+
+
+        <div
+            class="modal-content"
+            id="modalContent"
+        ></div>
+
+
+        <button
+            class="modal-ok"
+            id="modalOk"
+            type="button"
+        >
+            Понятно
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- =========================
+     EMAIL VERIFICATION MODAL
+========================== -->
+
+<div
+    class="modal"
+    id="verificationModal"
+>
+
+    <div class="modal-overlay"></div>
+
+
+    <div class="modal-box verification-box">
+
+        <div class="modal-icon">
+            ✉️
+        </div>
+
+
+        <h2>
+            Проверьте свою почту
+        </h2>
+
+
+        <p class="verification-text">
+
+            Мы отправили письмо с подтверждением
+            на ваш email.
+
+            <br><br>
+
+            Откройте письмо и подтвердите свой
+            аккаунт FlowChat.
+
+        </p>
+
+
+        <button
+            class="modal-ok"
+            id="checkVerification"
+            type="button"
+        >
+            Я подтвердил email
+        </button>
+
+
+        <button
+            class="secondary-button"
+            id="resendVerification"
+            type="button"
+        >
+            Отправить письмо ещё раз
+        </button>
+
+
+        <button
+            class="cancel-button"
+            id="verificationClose"
+            type="button"
+        >
+            Закрыть
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- =========================
+     RESET PASSWORD MODAL
+========================== -->
+
+<div
+    class="modal"
+    id="resetModal"
+>
+
+    <div class="modal-overlay"></div>
+
+
+    <div class="modal-box">
+
+        <button
+            class="modal-close"
+            id="resetClose"
+            type="button"
+        >
+            ×
+        </button>
+
+
+        <div class="modal-icon">
+            🔐
+        </div>
+
+
+        <h2>
+            Восстановление пароля
+        </h2>
+
+
+        <p class="verification-text">
+
+            Введите email своего аккаунта.
+            Мы отправим вам ссылку для
+            создания нового пароля.
+
+        </p>
+
+
+        <div class="input reset-input">
+
+            <span>✉</span>
+
+            <input
+                id="resetEmail"
+                type="email"
+                placeholder="you@example.com"
+            >
+
+        </div>
+
+
+        <em id="resetError"></em>
+
+
+        <button
+            class="modal-ok"
+            id="sendReset"
+            type="button"
+        >
+            Отправить ссылку
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- =========================
+     TOAST
+========================== -->
+
+<div
+    class="toast"
+    id="toast"
+></div>
+
+
+<!-- SCRIPT -->
+
+<script>
+window.addEventListener("error", function (event) {
+
+    console.group("🔥 FLOWCHAT ERROR");
+
+    console.error("Сообщение:", event.message);
+    console.error("Файл:", event.filename || "неизвестен");
+    console.error("Строка:", event.lineno || "неизвестна");
+    console.error("Колонка:", event.colno || "неизвестна");
+    console.error("Ошибка:", event.error);
+
+    console.groupEnd();
+
+});
+</script>
+
+<script
+    type="module"
+    src="script.js"
+></script>
+
+</body>
+
+</html>
